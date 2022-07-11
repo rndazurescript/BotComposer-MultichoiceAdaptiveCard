@@ -1,0 +1,90 @@
+[import](common.lg)
+
+# SendActivity_DidNotUnderstand()
+[Activity
+    Text = ${SendActivity_DidNotUnderstand_text()}
+]
+
+# SendActivity_DidNotUnderstand_text()
+- Sorry, I didn't get that.
+# TemplateName()
+-TemplateValue
+
+# genMultichoiceAdaptiveCard (collection)
+- ```
+{
+  "type": "AdaptiveCard",
+    "body": [
+        {
+            "type": "Input.ChoiceSet",
+            "id": "MultiSelectVal",
+            "label": "${dialog.foreach.value.Label}",
+            "isMultiSelect": true,
+            "value": "",
+            "choices": [
+                ${join(foreach(collection, item, getChoiceData(item)), ',')}
+            ]
+        }
+    ],
+    "actions": [
+        {
+           "id": "btnMultiselect",
+            "type": "Action.Submit",
+            "title": "Select",
+            "style": "positive",
+            "data": {
+                "text": "Start application process"
+            }
+        }
+    ],
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.3"
+}
+```
+
+# getChoiceData (item)
+- ```
+ {
+    "title": "${item.value}",
+    "value": "${item.key}"
+}
+```
+
+# SendActivity_bNbEZP()
+[Activity
+    Text = ${SendActivity_bNbEZP_text()}
+]
+
+# SendActivity_bNbEZP_text()
+- Thanks for selecting ${user.mchoice}
+
+
+# SendActivity_859266()
+[Activity
+    Text = ${SendActivity_859266_text()}
+]
+
+# SendActivity_859266_text()
+- Hello there
+# TextInput_Prompt_VNGD2e()
+[Activity
+    Attachments = ${json(genMultichoiceAdaptiveCard([
+                          {
+                            "Key": "Car",
+                            "Value": "Car",
+                            "Selected": false
+                          },
+                          {
+                            "Key": "Train, tube, bus",
+                            "Value": "Train, tube, bus",
+                            "Selected": false
+                          },
+                          {
+                            "Key": "Cycle",
+                            "Value": "Cycle",
+                            "Selected": false
+                          }
+                        ]))}
+]
+# TextInput_Prompt_VNGD2e_text()
+- Please select one
